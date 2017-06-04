@@ -67,7 +67,45 @@ LIMIT
 
 Resultatet blir presentert etter kort tid og kan enkelt lastes ned som json eller csv.
 
-### REST-endepunkt
+### Enkel applikasjon
+Det finnes offisielle klientbibliotek for C#, Go, Java, Node, PHP, Python og Ruby. For andre språk kan man bruke [REST-grensesnittet](https://cloud.google.com/bigquery/docs/reference/rest/v2/). I denne workshoppen har jeg valgt å implementere kallene i Node.js.
 
+OBS: Klientene for alle språk er fortsatt i beta, og Google garanterer ikke for bakoverkompatibilitet.
 
-### Klientbiblioteker
+Utdypende dokumentasjon om Node.js klientbiblioteket finner du [her](https://googlecloudplatform.github.io/google-cloud-node/#/docs/bigquery/master/bigquery).
+
+Hvis du ikke har node og npm installert, installer dette først. Instrukser finnes [her](https://nodejs.org/en/download/package-manager/).
+
+Første steg er å installere BigQuery klientbibliotek via npm med kommandoen
+```sh
+npm install --save @google-cloud/bigquery
+```
+
+TODO:
+gcloud auth application-default login
+
+Lag en .js fil som skal utføre spørringen mot BigQuery.
+Importer så avhengigheten til google-cloud/bigquery med:
+```js
+const bigquery = require('@google-cloud/bigquery')({
+  projectId: 'projectId'
+});
+```
+For å bruke gjøre en spørring mot BigQuery kaller man på query metoden til objektet med 'properties' som blant annet inneholder selve spørringen:
+```js
+const options = {
+  query: sqlQuery,
+  useLegacySql: true
+};
+
+bigquery
+  .query(options)
+  .then((results) => {
+    const rows = results[0];
+    printResult(rows);
+  })
+  .catch((err) => {
+    console.error('ERROR:', err);
+  });
+```
+Metoden query returnerer et promise som når returnert kan brukes til å prosessere responsen.
