@@ -1,8 +1,8 @@
 # BigQuery workshop
 ## Om BigQuery
-BigQuery er en datavarehusløsning som kjører på googles skyplatform GCP.
+BigQuery er en datavarehusløsning som kjører på googles skyplatform GCP. Den skalerer opp til teoretisk uendelig for å prosessere spørriner om nødvendig, og kan gi svar på få sekunder med å prosessere mange GB med data. Det er såvidt jeg vet ingen SLA eller lignende på ytelse, bare oppetid.
 
-//TODO Skrive om det tekniske som skjer i bakgrunnen og pros/cons
+//TODO Skrive om det tekniske som skjer i bakgrunnen m.m, kanskje litt pros/cons
 
 ### Kostnad
 #### Spørringer
@@ -11,7 +11,6 @@ Viktigste kostnaden med å bruke BigQuery er for datamengden spørringer travers
 #### Lagring
 En annen kostnad med å bruke BigQuery er lagring, det koster $0.02 per GB per måned.
 
-
 ## Komme i gang
 Det er få steg som skal til for å kunne ta i bruk BigQuery, spesielt om man bare vil prøve det ut.
 
@@ -19,12 +18,6 @@ Det er få steg som skal til for å kunne ta i bruk BigQuery, spesielt om man ba
 2. Åpne BigQuery fra menyen på venstresiden.
 
 Nå er du klar til å ta i bruk BigQuery på offentlige datasett som er gjort tilgjengelig i GCP.
-
-### Datasett
-TODO: Ta bort.
-Denne workshoppen vil ta i bruk offentlige datasett, så det er ikke behov for å laste opp data. Men skal man bruke BigQuery på egen data må dette lastes opp. En guide på dette finnes [her](https://cloud.google.com/bigquery/loading-data).
-
-De forskjellige offentlige datasettene med en liten beskrivelse kan du finne [her](https://cloud.google.com/bigquery/public-data/).
 
 ## Bruke BigQuery
 ### Spørringer fra BigQuery Web UI
@@ -60,6 +53,9 @@ LIMIT
 ```
 
 Resultatet blir presentert etter kort tid og kan enkelt lastes ned som json eller csv.
+
+Prøv noen spørringer mot de andre offentlige datasettene. Gjerne noen av de større for å få et inntrykk av hasigheten til BigQuery.
+De forskjellige offentlige datasettene med en liten beskrivelse kan du finne [her](https://cloud.google.com/bigquery/public-data/).
 
 ### Laste opp egen data
 En utfyllende guide for å laste opp data til BigQuery kan du finne [her](https://cloud.google.com/bigquery/loading-data).
@@ -102,8 +98,11 @@ Første steg er å installere BigQuery klientbibliotek via npm med kommandoen
 npm install --save @google-cloud/bigquery
 ```
 
-TODO:
+Hvis du har Google Cloud SDK installert kan du kjøre denne kommandoen for å autentisere maskinen:
+```sh
 gcloud auth application-default login
+```
+Alternativt kan du generere en nøkkelfil som må inkluderes i 'require' parameterene under. Hvordan det gjøres kan finnes [her](https://googlecloudplatform.github.io/google-cloud-node/#/docs/bigquery/0.9.1/guides/authentication). Dette vil for eksempel være nødvendig om koden kjøres fra en server eller en klient uten Google Cloud SDK satt opp og logget inn. Kjøres applikasjonen fra AppEngine er det derimot ikke nødvendig.
 
 Lag en .js fil som skal utføre spørringen mot BigQuery.
 Importer så avhengigheten til google-cloud/bigquery med:
@@ -129,4 +128,8 @@ bigquery
     console.error('ERROR:', err);
   });
 ```
-Metoden query returnerer et promise som når returnert kan brukes til å prosessere responsen.
+Metoden query returnerer et promise som når returnert kan brukes til å prosessere responsen. I dette tilfellet sendes den vidre til en metode som skriver den til konsollet.
+
+
+### Videre
+For inspirasjon om hva man kan gjøre med BigQuery anbefaler jeg å sjekke ut [reddit.com/r/bigquery](https://www.reddit.com/r/bigquery/).
