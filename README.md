@@ -130,6 +130,29 @@ bigquery
 ```
 Metoden query returnerer et promise som når returnert kan brukes til å prosessere responsen. I dette tilfellet sendes den vidre til en metode som skriver den til konsollet.
 
+#### Skriving
+Du kan også prøve deg på å lagre data programmatisk. Dette vil være relevant om du ikke bruker BigQuery mot et eksisterende datasett, men mot et du bygger opp underveis. Et scenario her kan være å lagre alle hendelser i en applikasjon for å så kunne kjøre spørringer mot et potensielt gigantisk datasett i rekordfart og få innblikk i bruksmønster, statistikk og mer.
 
-### Videre
+Via BigQuerys klientbibliotek kan man kalle på metoden 'insert' på en tabell hentet ved hjelp av 'table' kalt på 'dataset'.
+```js
+bigquery
+  .dataset(datasetId)
+  .table(tableId)
+  .insert(rows)
+  .then((insertErrors) => {
+    console.log('Inserted:');
+    rows.forEach((row) => console.log(row));
+
+    if (insertErrors && insertErrors.length > 0) {
+      console.log('Insert errors:');
+      insertErrors.forEach((err) => console.error(err));
+    }
+  })
+  .catch((err) => {
+    console.error('ERROR:', err);
+  });
+```
+Her er rows et JSON array med data som skal insertes. Merk at responsen til promiset er en liste med errors, så en error for hver rad som eventuelt ikke ble godkjent. Mer utfyllende informasjon om dette finner du [her](https://cloud.google.com/bigquery/streaming-data-into-bigquery#bigquery-stream-data-nodejs).
+
+## Videre
 For inspirasjon om hva man kan gjøre med BigQuery anbefaler jeg å sjekke ut [reddit.com/r/bigquery](https://www.reddit.com/r/bigquery/).
