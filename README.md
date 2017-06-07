@@ -1,15 +1,31 @@
 # BigQuery workshop
 ## Om BigQuery
-BigQuery er en datavarehusløsning som kjører på googles skyplatform GCP. Den skalerer opp til teoretisk uendelig for å prosessere spørriner om nødvendig, og kan gi svar på få sekunder med å prosessere mange GB med data. Det er såvidt jeg vet ingen SLA eller lignende på ytelse, bare oppetid.
+BigQuery er en datavarehuslignende løsning som kjører på Googles skyplatform (GCP).
 
-//TODO Skrive om det tekniske som skjer i bakgrunnen m.m, kanskje litt pros/cons
+Google BigQuery er en eksternt tilgjengelig implementasjon av Google sin Dremel.
+
+>By combining multi-level execution trees and columnar data layout, it is capable of running aggregation queries over trillion-row tables in seconds[1].
+
+[1]https://research.google.com/pubs/pub36632.html
+
+Dremel lagrer data kolonnebasert, noe som gir høy scannehastighet og kompresjonsrate.
+Dette vil si at data fra forskjellige innslag, men samme kolonne lagres sammen.
+Tradisjonelt er dette en teknikk datavarehus har brukt.
+Google mener en radbasert lagring vil kunne oppnå en kompresjonsrate på 1:3, mens en kolonnebasert lagring kan oppnå 1:10.
+Dette skjer fordi det er veldig mye mer sansynelig at data fra samme kolonne er lik.
+En ulempe med kolonnebasert lagring er at updates er krevende. (Tror dette løses av Google med å være append only)
+
+Dremel bruker en trestruktur for distrubusjon av arbeid, i liket med MapReduce.
+Dremel er derimot mange ganger raskere enn MapReduce.
+Hvis man har behov for å analysere ustrukturert data og behandle den programmatisk må man bruke MapReduce.
 
 ### Kostnad
 #### Spørringer
-Viktigste kostnaden med å bruke BigQuery er for datamengden spørringer traverserer. Det koster $5 per TB hvor den første TB er gratis hver måned. Aktører som Spotify bruker [500PB per måned](https://twitter.com/sinisa_lyh/status/855212130026631168), noe som ville beløpt seg til $2 560 000 uten en egen avtale på pris.
+Viktigste kostnaden med å bruke BigQuery er for datamengden spørringer traverserer. Det koster $5 per TB hvor den første TB er gratis hver måned. Aktører som Spotify bruker [500 PB per måned](https://twitter.com/sinisa_lyh/status/855212130026631168), noe som ville beløpt seg til $2 560 000 uten en egen avtale på pris.
 
 #### Lagring
 En annen kostnad med å bruke BigQuery er lagring, det koster $0.02 per GB per måned.
+De første 10 GB  er kostnadsfri.
 
 ## Komme i gang
 Det er få steg som skal til for å kunne ta i bruk BigQuery, spesielt om man bare vil prøve det ut.
