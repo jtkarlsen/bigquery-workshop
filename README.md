@@ -43,7 +43,7 @@ Fra menyen på venstresiden kan man lage en ny spørring, se på tidligere spør
 
 Et interessant offentlig datasett gjort tilgjenelig i Bigquery er github sine offentlige pakkebrønner. Her kan man for eksempel søke gjennom innholdet i filene etter 'TODO' for å finne ut hvilken prosjekter som kunne trengt din hjelp.
 
-OBS: Det er lurt å bruke 'sample' versjonene for github sitt datasett som gjør at denne spørringen prosesserer 24 GB i stedet for 1.94 TB som vil bruke det dobbelte av den gratis kvoten på en spørring.
+OBS: Det er lurt å bruke 'sample' versjonene for github sitt datasett som gjør at denne spørringen prosesserer 24 GB i stedet for 1.94 TB som vil bruke hele den gratis kvoten på en spørring.
 ```sql
 SELECT
   content.sample_repo_name,
